@@ -1,0 +1,16 @@
+<html>
+  <head>
+    <title>
+      HDD bench
+    </title>
+  </head>
+  <body>
+    <ol>
+      <li>hdparm (buffered)</li>
+      <p>sudo hdparm -t /dev/mmcblk0</p>
+      <li>dd (write)</li>
+      <p>sudo dd if=/dev/zero of=/drive/output bs=8k count=50k conv=fsync; sudo rm -f /drive/output</p>
+      <li>iozone (4K Random read/write)</li>
+      <p>iozone -e -I -a -s 100M -r 4k -r 512k -r 16M -i 0 -i 1 -i 2 [-f /path/to/file]</p>
+    </ol>
+</html>

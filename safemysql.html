@@ -1,0 +1,26 @@
+Dumping safely
+
+COPY
+# Do not do this, since it might screw up encoding
+mysqldump -uroot -p database > utf8.dump # this is bad
+Better do:
+
+COPY
+mysqldump -uroot -p database -r utf8.dump
+Note that when your MySQL server is not set to UTF-8 you need to do mysqldump --default-character-set=latin1 (!) to get a correctly encoded dump. In that case you will also need to remove the SET NAMES='latin1' comment at the top of the dump, so the target machine won't change its UTF-8 charset when sourcing.
+
+If you only want to dump the structure without data, use
+
+COPY
+mysqldump -uroot -p --no-data database -r utf8.dump
+Importing a dump safely
+
+COPY
+# Do not do this, since it might screw up encoding
+mysql -u username -p database < dump_file # this is bad
+Better do:
+
+COPY
+mysql -uroot -p --default-character-set=utf8 database
+mysql> SET names 'utf8'
+mysql> SOURCE utf8.dump
